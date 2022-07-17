@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+	<head>
+       
+			<meta charset="UTF-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<style>
+		
+			body {
+			    font-family: arial;
+			}
+			button {
+			    padding:10px;
+			    background-color:#1f67ab;
+			    color: #FFFFFF;
+			    border: 0px;
+			    cursor:pointer;
+			    border-radius: 5px;
+			}
+			#output {
+			    background-color:#b7cbd5;
+			    padding:10px;
+			    width: 100%;
+			    margin-top:20px;
+			    line-height:30px;
+			}
+			.hide {
+			    display:none;
+			}
+			.show {
+			    display:block;
+			}
+         
+		</style>
+        
+		<title> Speech to Text</title>
+	</head>
+	<body>
+		
+    
+		<script>
+			
+		    function runSpeechRecognition() {
+		       
+		        var output = document.getElementById("output");
+               output.style.color = "#1f67ab";
+		       
+		        var action = document.getElementById("action");
+                action.style.color = "";
+                
+                var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+                var recognition = new SpeechRecognition();
+              
+               
+                recognition.onstart = function() {
+                    action.innerHTML = "<h2>listening, please speak...</h2>";
+                };
+                
+                recognition.onspeechend = function() {
+                    action.innerHTML = "<h2>stopped listening, hope you are done...</h2>";
+                    recognition.stop();
+                }
+              
+                recognition.onresult = function(event) {
+                    var transcript = event.results[0][0].transcript;
+                  
+                    output.innerHTML = "<b>Text:</b> " + transcript  ;
+                    output.classList.remove("hide");
+                
+                    
+                };
+              
+                 recognition.start();
+	        }
+           
+		</script>
+
+        <div align="center">
+            <br>
+            <p>  <h2> Click on the below button and speak something... </h2></p>
+            <p><button type="button" style="width: 70px" onclick="runSpeechRecognition()"> <h2> start </h2></button> &nbsp; <span id="action"></span></p>
+            <div id="output" class="hide" ></div>
+            </div>
+	</body>
+</html> 
